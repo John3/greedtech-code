@@ -47,7 +47,7 @@
 #include "gfx/gfxDrawUtil.h"
 #include "materials/materialDefinition.h"
 
-
+#include "T3D/rigidShape.h"
 namespace {
 
 static U32 sWorkingQueryBoxStaleThreshold = 10;    // The maximum number of ticks that go by before
@@ -1358,12 +1358,24 @@ bool Vehicle::resolveCollision(Rigid&  ns,CollisionList& cList)
          // "constraints".
          if (vn < -mDataBlock->contactTol) 
          {
-
-            // Apply impulses to the rigid body to keep it from
-            // penetrating the surface.
-            ns.resolveCollision(cList[i].point,
-               cList[i].normal);
-            collided  = true;
+			 // Apply impulses to the rigid body to keep it from
+			 // penetrating the surface.
+			 if ( c.object->getTypeMask() & VehicleObjectType )
+			 {
+				 Vehicle* other = dynamic_cast<Vehicle*>( c.object );
+				 if (other)
+					 ns.resolveCollision(cList[i].point , cList[i].normal, &other->mRigid );
+				 else
+				 {
+					 RigidShape* otherRigid = dynamic_cast<RigidShape*>( c.object );
+					 if (otherRigid)
+						 ns.resolveCollision(cList[i].point , cList[i].normal, &otherRigid->mRigid );
+					 else
+						 ns.resolveCollision(cList[i].point, cList[i].normal);
+				 }
+			 }
+			 else ns.resolveCollision(cList[i].point, cList[i].normal);
+			 collided  = true;
 
             // Keep track of objects we collide with
             if (!isGhost() && c.object->getTypeMask() & ShapeBaseObjectType) 
