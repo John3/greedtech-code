@@ -200,7 +200,6 @@ class Vehicle: public ShapeBase
 
    CollisionList mCollisionList;
    CollisionList mContacts;
-   Rigid mRigid;
    ShapeBaseConvex mConvex;
    int restCount;
 
@@ -253,6 +252,7 @@ public:
    // Test code...
    static ClippedPolyList* sPolyList;
    static S32 sVehicleCount;
+   Rigid mRigid;
 
    //
    Vehicle();
