@@ -1,3 +1,14 @@
+GREED Tech MIT
+===============
+Is a Open Source Engine based on Torque 3D MIT 3.5 release.
+
+The purpose of GREED is to create a modern FPS Engine with todays standards - visual and gameplay features.
+
+It is a Community driven project and therefore
+it will be focused and directed at demands of the community.
+
+License: MIT
+
 Torque 3D v3.5
 ==============
 
